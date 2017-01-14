@@ -1,0 +1,2 @@
+Move views to a views/ directory.
+This may involve starting a main app that then loads/imports views.

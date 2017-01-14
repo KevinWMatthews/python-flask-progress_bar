@@ -1,0 +1,5 @@
+# Run
+python views/progress_bar.py
+
+# Browse to
+127.0.0.7:5000
