@@ -1,5 +1,5 @@
 var websocket;
-var websocketUrl = "ws://echo.websocket.org";
+var websocketUrl = "ws://localhost:9000/echo";  // cd_websocket.c demands this url.
 
 function init() {
     websocket = new WebSocket(websocketUrl);
