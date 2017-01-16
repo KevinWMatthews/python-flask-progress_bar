@@ -1,10 +1,17 @@
-var websocket;
+var websocket1;
+var websocket2;
 // This url can be used for testing. It echoes anything that you send to it.
 // var websocketUrl = "ws://echo.websocket.org";
-var websocketUrl = "ws://localhost:9000/echo";  // cd_websocket.c demands this url.
+var websocketUrl1 = "ws://localhost:9000/progress_bar_1";  // cd_websocket.c demands this url.
+var websocketUrl2 = "ws://localhost:9000/progress_bar_2";  // cd_websocket.c demands this url.
 
 function init() {
-    websocket = new WebSocket(websocketUrl);
+    openWebsocket(websocket1, websocketUrl1);
+    openWebsocket(websocket2, websocketUrl2);
+}
+
+function openWebsocket(websocket, url) {
+    websocket = new WebSocket(url);
     websocket.onopen = function(event) { onOpen(event) };
     websocket.onclose = function(event) { onClose(event) };
     websocket.onmessage = function(event) { onMessage(event) };
@@ -20,29 +27,42 @@ function onClose(event) {
 }
 
 function onMessage(event) {
-    progress = event.data;
+    message = event.data;
 
-    console.log("WebSocket received message: " + progress);
+    console.log("WebSocket received message: " + message);
+    try {
+        obj = JSON.parse(message);
+    }
+    catch(error) {
+        console.log("Error parsing JSON: " + error);
+        return;
+    }
+    console.log("id: " + obj.id + ", progress: " + obj.progress);
+
+    var progress = obj.progress;
+    var id = obj.id;
+
     if ($.isNumeric(progress) == false)
     {
         console.log("Received non-numeric data!");
         return;
     }
+
     if (progress < 0 || progress > 100)
     {
         console.log("Progress out of range!");
         return;
     }
 
-    updateProgressBar(progress);
+    updateProgressBar(id, progress);
 }
 
 function onError(event) {
     console.log("WebSocket error: " + event.data);
 }
 
-function updateProgressBar(progress) {
-    $('#progress_bar').css('width', progress + '%').attr('aria-valuenow', progress + '%');
+function updateProgressBar(id, progress) {
+    $('#' + id).css('width', progress + '%').attr('aria-valuenow', progress + '%');
 }
 
 window.addEventListener("load", init, false);
