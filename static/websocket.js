@@ -1,4 +1,6 @@
 var websocket;
+// This url can be used for testing. It echoes anything that you send to it.
+// var websocketUrl = "ws://echo.websocket.org";
 var websocketUrl = "ws://localhost:9000/echo";  // cd_websocket.c demands this url.
 
 function init() {
@@ -21,6 +23,17 @@ function onMessage(event) {
     progress = event.data;
 
     console.log("WebSocket received message: " + progress);
+    if ($.isNumeric(progress) == false)
+    {
+        console.log("Received non-numeric data!");
+        return;
+    }
+    if (progress < 0 || progress > 100)
+    {
+        console.log("Progress out of range!");
+        return;
+    }
+
     updateProgressBar(progress);
 }
 
