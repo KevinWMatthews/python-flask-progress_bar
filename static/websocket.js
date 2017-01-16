@@ -18,11 +18,18 @@ function onClose(event) {
 }
 
 function onMessage(event) {
-    console.log("WebSocket received message: " + event.data);
+    progress = event.data;
+
+    console.log("WebSocket received message: " + progress);
+    updateProgressBar(progress);
 }
 
 function onError(event) {
     console.log("WebSocket error: " + event.data);
+}
+
+function updateProgressBar(progress) {
+    $('#progress_bar').css('width', progress + '%').attr('aria-valuenow', progress + '%');
 }
 
 window.addEventListener("load", init, false);
