@@ -1,4 +1,12 @@
+# Ignore python virtual enviromnent
+venv/
+
+# Ignore Sublime Text files
 *.sublime-workspace
+
+# Ignore vim swap files
 *.swp
 *.swo
-venv/
+
+# Ignore Konqueror files
+.directory
