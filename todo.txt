@@ -1,2 +1,6 @@
 Move views to a views/ directory.
 This may involve starting a main app that then loads/imports views.
+
+This requires running a separate websocket server.
+
+Add notes on create a virtual environment.
